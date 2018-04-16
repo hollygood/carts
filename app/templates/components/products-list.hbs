@@ -1,0 +1,80 @@
+<div class="col-sm-8">
+  <h1>Products</h1>
+
+  <div id="products-list" class="row">
+    {{#each products as |product key|}}
+      {{#if (and (lt key max) (gte key start))}}
+        <div class="col-sm-4">
+          <div class="product">
+            <img src="{{product.thumbnails.b3}}" alt="{{product.productName}}"/>
+            <h4>{{product.productName}}</h4>
+            <h4>${{product.productPrice}}</h4>
+            <p>Color: {{product.productColor}}</p>
+            <p>Quantity: {{product.quantity}}</p>
+
+            <button class="btn btn-primary btn-sm" {{action "add" key}}>
+              Buy
+            </button>
+          </div>
+        </div>
+      {{/if}}
+    {{/each}}
+  </div>
+
+  <hr>
+
+  <ul id="paginate" class="unstyled list-inline">
+    {{#if (gte prevPage 1)}}
+      <li><a href="#" {{action "filterProducts" nextPage}}> &lt; </a></li>
+    {{/if}}
+
+    {{#each pageNumbers as |number|}}
+      <li><a class="{{if (eq number currentPage) 'active' ''}}"
+        href="#" {{action "filterProducts" number}}>{{number}}</a></li>
+    {{/each}}
+
+    {{#if (lt nextPage totalPage)}}
+      <li><a href="#" {{action "filterProducts" nextPage}}> &gt; </a></li>
+    {{/if}}
+  </ul>
+
+  <div id="basket">
+    <h2>My Bag</h2>
+
+    <hr>
+    <ul class="list-unstyled">
+      {{#each products as |p key|}}
+        {{#if (gt p.count 0)}}
+          <div class="row added-products">
+          <div class="col-xs-4">
+            <img src="{{p.thumbnails.b3}}" alt="{{p.productName}}" />
+          </div>
+
+          <div class="col-xs-6">
+            <h4>{{p.productName}}</h4>
+            <p>Color: {{p.productColor}}</p>
+            <p><strong>QTY: {{p.count}}</strong></p>
+          </div>
+
+          <div class="col-xs-2">
+            <h4>${{p.productPrice}}</h4>
+            <button class="btn btn-primary btn-md" {{action "remove" key}}>
+              Remove
+            </button>
+          </div>
+        </div>
+        {{/if}}
+      {{/each}}
+    </ul>
+  </div>
+</div>
+
+<div class="col-sm-4">
+  <div id="total">
+    <h3>ORDER TOTAL: <span>${{total}}</span></h3>
+    <hr>
+
+    <p>Subtotal: <span>${{subTotal}}</span></p>
+    <p>GST(5%): <span>${{taxTotal}}</span></p>
+  </div>
+</div>

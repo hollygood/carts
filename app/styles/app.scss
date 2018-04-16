@@ -1,0 +1,93 @@
+$grey-bg: #f0f0f0;
+$blue: #3886c7;
+
+body {
+  padding: 2em 2em 3em;
+}
+
+h1 {
+  background: $grey-bg;
+  font-size: 2.6em;
+  padding: 0.2em 1em;
+  text-transform: uppercase;
+}
+
+p {
+  font-size: 1.2em;
+}
+
+hr {
+  border-top: 1px solid #ccc;
+}
+
+img {
+  max-width: 100%;
+}
+
+#products-list {
+  text-align: center;
+  margin-top: 3em;
+
+  .product {
+    margin-bottom: 2.5em;
+
+    img {
+      max-width: 220px;
+    }
+  }
+}
+
+#paginate {
+  text-align: right;
+  margin: 2em 0;
+
+  a {
+    color: #888;
+
+    &.active {
+      color: #333;
+      font-weight: bold;
+    }
+  }
+}
+
+#total, #basket {
+  background: $grey-bg;
+  padding: 1em;
+}
+
+#total {
+  margin-top: 864px;
+
+  @media screen and (max-width: 768px) {
+    margin-top: 2em;
+  }
+
+  p {
+    font-weight: bold;
+  }
+
+  span {
+    float: right;
+  }
+}
+
+#basket {
+  h2 {
+    font-size: 3.2em;
+  }
+
+  .added-products {
+    margin-bottom: 2em;
+  }
+
+  .btn {
+    background: none;
+    box-shadow: none;
+    color: $blue;
+    font-weight: bold;
+    border: 0;
+    text-shadow: none;
+    padding: 0;
+  }
+}
