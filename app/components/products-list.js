@@ -1,13 +1,10 @@
 import Component from '@ember/component';
 import { computed, set } from '@ember/object';
+import $ from 'jquery';
 
 export default Component.extend({
 
-  addedProducts: null,
-
-  find(id) {
-    return this.get('products').find( product => product.productId === id );
-  },
+  addedProducts: [],
 
   subTotal: 0,
 
@@ -47,29 +44,50 @@ export default Component.extend({
     return this.get('currentPage') - 1;
   }),
 
-  actions: {
-    add(id) {
-      let data = this.get('products').objectAt(id);
-      let count = data.count + 1;
-      set(data, "count", count);
+  calculateTotal() {
+    return this.get('addedProducts').reduce((accum, product) => {
+      return accum + product.details.productPrice * product.count
+    }, 0);
+  },
 
-      let subTotalPrice = this.get('subTotal') + data.productPrice;
-      this.set('subTotal', subTotalPrice);
+  actions: {
+    add(product) {
+      const locationInCart = this.get('addedProducts').findIndex(p => {
+        return p.details.productId === product.productId;
+      });
+
+      if (locationInCart === -1) {
+        this.get('addedProducts').pushObject({
+          details: product,
+          count: 1
+        });
+      } else {
+        let count = this.get('addedProducts')[locationInCart].count + 1;
+        set(this.get('addedProducts')[locationInCart], 'count', count);
+      }
+
+      this.set('subTotal', this.calculateTotal());
     },
 
     remove(id) {
-      let data = this.get('products').objectAt(id);
-      let count = (data.count > 1) ? data.count - 1 : 0;
-      set(data, "count", count);
+      const locationInCart = this.get('addedProducts').findIndex(p => {
+        return p.details.productId === id;
+      });
 
-      let subTotalPrice = this.get('subTotal') - data.productPrice;
-      this.set('subTotal', subTotalPrice);
+      if (this.get('addedProducts')[locationInCart].count <= 1){
+        this.get('addedProducts').removeAt(locationInCart);
+      } else {
+        let count = this.get('addedProducts')[locationInCart].count - 1;
+        set(this.get('addedProducts')[locationInCart], 'count', count);
+      }
+
+      this.set('subTotal', this.calculateTotal());
     },
 
     filterProducts(number) {
       event.preventDefault();
-      let start = (number-1)*6;
-      let max = number*6;
+      let start = (number -1 ) * 6;
+      let max = number * 6;
 
       this.set('start', start);
       this.set('max', max);

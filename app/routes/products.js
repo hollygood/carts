@@ -8,10 +8,6 @@ export default Route.extend({
       $.ajax({
         type: 'GET',
         url: 'https://s3.amazonaws.com/joefresh-marketing-dev/developer-interview/full-list-bb.json',
-        //url: 'data.json',
-        //async: true,
-        //dataType: 'json',
-        //contentType: 'application/json',
         crossDomain: true,
         xhrFields: {
           'withCredentials': false
@@ -29,10 +25,6 @@ export default Route.extend({
   },
 
   setupController: function(controller, model) {
-    model.forEach((product) => {
-      product.count = 0;
-    });
-
     controller.set('products', model);
   }
 });

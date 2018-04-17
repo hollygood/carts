@@ -12,7 +12,7 @@
             <p>Color: {{product.productColor}}</p>
             <p>Quantity: {{product.quantity}}</p>
 
-            <button class="btn btn-primary btn-sm" {{action "add" key}}>
+            <button class="btn btn-primary btn-sm" {{action "add" product}}>
               Buy
             </button>
           </div>
@@ -40,31 +40,31 @@
 
   <div id="basket">
     <h2>My Bag</h2>
-
+    {{addedProducts}}
     <hr>
     <ul class="list-unstyled">
-      {{#each products as |p key|}}
-        {{#if (gt p.count 0)}}
-          <div class="row added-products">
+      {{#if addedProducts}}
+      {{#each addedProducts as |p|}}
+        <div class="row added-products">
           <div class="col-xs-4">
-            <img src="{{p.thumbnails.b3}}" alt="{{p.productName}}" />
+            <img src="{{p.details.thumbnails.b3}}" alt="{{p.details.productName}}" />
           </div>
 
           <div class="col-xs-6">
-            <h4>{{p.productName}}</h4>
-            <p>Color: {{p.productColor}}</p>
+            <h4>{{p.details.productName}}</h4>
+            <p>Color: {{p.details.productColor}}</p>
             <p><strong>QTY: {{p.count}}</strong></p>
           </div>
 
           <div class="col-xs-2">
-            <h4>${{p.productPrice}}</h4>
-            <button class="btn btn-primary btn-md" {{action "remove" key}}>
+            <h4>${{p.details.productPrice}}</h4>
+            <button class="btn btn-primary btn-md" {{action "remove" p.details.productId}}>
               Remove
             </button>
           </div>
         </div>
-        {{/if}}
       {{/each}}
+      {{/if}}
     </ul>
   </div>
 </div>
