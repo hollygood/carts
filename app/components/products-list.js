@@ -1,10 +1,10 @@
 import Component from '@ember/component';
 import { computed, set } from '@ember/object';
-import $ from 'jquery';
+import { A } from '@ember/array';
 
 export default Component.extend({
 
-  addedProducts: [],
+  addedProducts: A(),
 
   subTotal: 0,
 
